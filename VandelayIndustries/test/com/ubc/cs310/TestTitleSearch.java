@@ -1,7 +1,6 @@
 package com.ubc.cs310;
 
 import java.util.ArrayList;
-import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import com.ubc.cs310.server.SpaceServiceImpl;
@@ -11,11 +10,8 @@ public class TestTitleSearch {
 
 	// Create Spaces here
 	Space space1 = new Space("English Word", "", "", "", "", "", "");
-	//space1.setName("English word");
 	Space space2 = new Space("Old English", "", "", "", "", "", "");
-	//space2.setName("Old English");
 	Space space3 = new Space("New Language", "", "", "", "", "", "");
-	//space3.setName("New Language");
 	
 	// Create parameters here
 	String noMatches = "Card";

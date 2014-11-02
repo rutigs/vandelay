@@ -1,7 +1,6 @@
 package com.ubc.cs310;
 
 import java.util.ArrayList;
-import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import com.ubc.cs310.server.SpaceServiceImpl;
