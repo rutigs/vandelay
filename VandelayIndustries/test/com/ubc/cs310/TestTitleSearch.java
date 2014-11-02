@@ -7,9 +7,9 @@ import com.ubc.cs310.server.SpaceServiceImpl;
 public class TestTitleSearch {
 
 	// Create Spaces here
-	space1 = new Space();
-	space2 = new Space();
-	space3 = new Space();
+	Space space1 = new Space();
+	Space space2 = new Space();
+	Space space3 = new Space();
 	
 	// Create parameters here
 	String noMatches = "Card";
