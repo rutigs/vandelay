@@ -2,18 +2,17 @@ package com.ubc.cs310;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.Test;
+import static org.junit.Assert.*;
 import com.ubc.cs310.server.SpaceServiceImpl;
 import com.ubc.cs310.server.Space;
 
 public class TestActivitySearch {
 	
 	// Create Spaces here
-	Space space1 = new Space();
-	space1.setType("English Word");
-	Space space2 = new Space();
-	space2.setType("Old English");
-	Space space3 = new Space();
-	space3.setType("New Language");
+	Space space1 = new Space("", "", "English Word", "", "", "", "");
+	Space space2 = new Space("", "", "Old English", "", "", "", "");
+	Space space3 = new Space("", "", "New Language", "", "", "", "");
 	
 	// Create parameters here
 	String noMatches = "Card";
