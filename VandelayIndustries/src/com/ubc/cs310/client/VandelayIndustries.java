@@ -54,7 +54,7 @@ public class VandelayIndustries implements EntryPoint {
 	private HorizontalPanel searchPanel = new HorizontalPanel();
 	private TextBox searchBox = new TextBox();
 	private ListBox filterBox = new ListBox();
-private Button searchButton = new Button("Search");
+	private Button searchButton = new Button("Search");
 	//	private LoginInfo loginInfo = null;
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label(
