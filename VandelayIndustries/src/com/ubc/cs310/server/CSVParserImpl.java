@@ -67,16 +67,14 @@ public class CSVParserImpl extends RemoteServiceServlet implements
 				// Split attributes by commas.
 				String[] attributes = line.split(splitBy);
 
-				Space space = new Space();
-
 				// Set attributes for the space.
-				space.setName(attributes[0]);
-				space.setURL(attributes[1]);
-				space.setType(attributes[2]);
-				space.setPrimaryUse(attributes[3]);
-				space.setAddress(attributes[4]);
-				space.setLocalArea(attributes[5]);
-				space.setOwnership(attributes[6]);
+				String name = attributes[0];
+				String urlString = attributes[1];
+				String type = attributes[2];
+				String primaryUse = attributes[3];
+				String address = attributes[4];
+				String localArea = attributes[5];
+				String ownership = attributes[6];
 
 				// To be implemented in second sprint.
 				/*
@@ -84,7 +82,7 @@ public class CSVParserImpl extends RemoteServiceServlet implements
 				 * Float.parseFloat(attributes[11]);
 				 * space.setLocation(attributes[4], lat, lon);
 				 */
-
+				Space space = new Space (name, urlString, type, primaryUse, address, localArea, ownership);
 				spaces.add(space);
 			}
 		} catch (FileNotFoundException e) {
@@ -101,8 +99,5 @@ public class CSVParserImpl extends RemoteServiceServlet implements
 			}
 		}
 		spaces.remove(0);
-	}
-
-	
-	
+	}	
 }
