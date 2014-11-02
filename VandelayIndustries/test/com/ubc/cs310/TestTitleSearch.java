@@ -2,14 +2,16 @@ package com.ubc.cs310;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Test;
+
 import com.ubc.cs310.server.SpaceServiceImpl;
 import com.ubc.cs310.server.Space;
 
 public class TestTitleSearch {
 
 	// Create Spaces here
-	Space space1 = new Space();
-	space1.setName("English word");
+	Space space1 = new Space("word", "", "", "", "", "", "");
 	Space space2 = new Space();
 	space2.setName("Old English");
 	Space space3 = new Space();
