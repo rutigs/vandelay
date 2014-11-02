@@ -1,6 +1,7 @@
 package com.ubc.cs310.client;
 
 import com.ubc.cs310.shared.FieldVerifier;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -34,11 +35,46 @@ public class VandelayIndustries implements EntryPoint {
 	 */
 	private final GreetingServiceAsync greetingService = GWT
 			.create(GreetingService.class);
-
+	
+	private LoginInfo loginInfo = null;
+	private VerticalPanel loginPanel = new VerticalPanel();
+	private Label loginLabel = new Label(
+	    "Please sign in to your Google Account to access the Cultural Spaces application.");
+	private Anchor signInLink = new Anchor("Sign In");
+	private Anchor signOutLink = new Anchor("Sign Out");
+	  
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		// Check login status using login service.
+		LoginServiceAsync loginService = GWT.create(LoginService.class);
+		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+			public void onFailure(Throwable error) {
+			}
+	      
+			public void onSuccess(LoginInfo result) {
+				loginInfo = result;
+				if(loginInfo.isLoggedIn()) {
+					loadVandelayIndustries();
+				} else {
+					loadLogin();
+				}
+			}
+		});
+	}
+	
+	private void loadLogin() {
+	    // Assemble login panel.
+	    signInLink.setHref(loginInfo.getLoginUrl());
+	    loginPanel.add(loginLabel);
+	    loginPanel.add(signInLink);
+	    RootPanel.get("spaceList").add(loginPanel); //figure out what spaceList is
+	  }
+
+	private void loadVandelayIndustries() {
+		// Set up sign out hyperlink.
+	    signOutLink.setHref(loginInfo.getLogoutUrl());
 		final Button sendButton = new Button("Send");
 		final TextBox nameField = new TextBox();
 		nameField.setText("GWT User");
@@ -148,5 +184,10 @@ public class VandelayIndustries implements EntryPoint {
 		MyHandler handler = new MyHandler();
 		sendButton.addClickHandler(handler);
 		nameField.addKeyUpHandler(handler);
+		
+		// Assemble Main panel.
+	    //mainPanel.add(signOutLink);
+		// add signOutLink to the panel.  Uncomment this if using main panel, otherwise it won't compile
+		// The program still needs a place to enter name and doesn't allow login yet
 	}
 }
