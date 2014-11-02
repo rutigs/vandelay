@@ -2,14 +2,8 @@ package com.ubc.cs310;
 
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
-
-import org.junit.Test;
-
-=======
 import org.junit.Test;
 import static org.junit.Assert.*;
->>>>>>> f492d8d8f01e6c375b537fca915e9cf16ef3b934
 import com.ubc.cs310.server.SpaceServiceImpl;
 import com.ubc.cs310.server.Space;
 
