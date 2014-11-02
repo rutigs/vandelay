@@ -1,53 +1,79 @@
-package com.ubc.cs310.server;
+public class Space{
 
-import java.util.Date;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-import com.google.appengine.api.users.User;
+private String name;
+private String url;
+private String type;
+private String primaryUse;
+private String address;
+private String localArea;
+private String ownership;
+private Location location;
 
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class Space {
+public Space(){
+}
 
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Long id;
-	@Persistent
-	private User user;
-	@Persistent
-	private String title;
-	@Persistent
-	private Date createDate;
-	// Fix fields for needed information
-	
-	public Space() {
-		// Do nothing?
-	}
-	
-	public Space(User user, String title) {
-		this();
-		this.user = user;
-		this.title = title;
-		// add other fields - get them from parser
-	}
-	
-	public User getUser() {
-	    return this.user;
-	}
-	
-	public String getTitle() {
-	    return this.title;
-	}
-	
-	public void setUser(User user) {
-	    this.user = user;
-	}
-	
-	public void setTitle(String title) {
-	    this.title = title;
-	}
-	
-	// Code the rest of the getters and setters needed for fields above
+public void setName(String name){
+	this.name = name;
+}
+
+public void setUrl(String url){
+	this.url = url;
+}
+
+public void setType(String type){
+	this.type = type;
+}
+
+public void setPrimaryUse(String pUse){
+	this.primaryUse = pUse;
+}
+
+public void setAddress(String address){
+	this.address = address;
+}
+
+public void setLocalArea(String lArea){
+	this.localArea = lArea;
+}
+
+public void setOwnership(String ownership){
+	this.ownership = ownership;
+}
+
+public void setLocation(String address, float lat, float lon){
+	this.location = new Location(address, lat, lon)
+}
+
+public String getName(){
+	return this.name;
+}
+
+public String getURL(){
+	return this.url;
+}
+
+public String getType(){
+	return this.type;
+}
+
+public String getPrimaryUse(){
+	return this.primaryUse;
+}
+
+public String getAddress(){
+	return this.address;
+}
+
+public String getLocalArea(){
+	return this.localArea;
+}
+
+public String getOwnerShip(){
+	return this.ownership;
+}
+
+public Location getLocation(){
+	return this.location;
+}
+
 }
