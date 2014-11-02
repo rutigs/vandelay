@@ -36,11 +36,11 @@ public class SpaceServiceImpl extends RemoteServiceServlet implements
 	
 	public ArrayList<Space> titleSearch(String parameter, ArrayList<Space> originalList) { //create Space class
 		// create empty list of search results
-		List<Space> titleList = new ArrayList<Space>();
+		ArrayList<Space> titleList = new ArrayList<Space>();
 		// loop through elements of oriinalList
 		for(Space space : originalList) {
 			// use regex *parameter* to test equivalence
-			String title = space.getActivity(); //code getActivity
+			String title = space.getName(); //code getActivity
 			if(title.matches("*" + parameter + "*")) {
 				titleList.add(space);
 			}
@@ -50,11 +50,11 @@ public class SpaceServiceImpl extends RemoteServiceServlet implements
 	
 	public ArrayList<Space> activitySearch(String parameter, ArrayList<Space> originalList) { //create Space class
 		// create empty list of search results
-		List<Space> activityList = new ArrayList<Space>();
+		ArrayList<Space> activityList = new ArrayList<Space>();
 		// loop through elements of oriinalList
 		for(Space space : originalList) {
 			// use regex *parameter* to test equivalence
-			String activity = space.getActivity();
+			String activity = space.getType();
 			if(activity.matches("*" + parameter + "*")) {
 				activityList.add(space);
 			}
