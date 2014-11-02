@@ -3,6 +3,7 @@ package com.ubc.cs310;
 import java.util.ArrayList;
 import java.util.List;
 import com.ubc.cs310.server.SpaceServiceImpl;
+import com.ubc.cs310.server.Space;
 
 public class TestActivitySearch {
 
