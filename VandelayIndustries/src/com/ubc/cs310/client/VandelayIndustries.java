@@ -9,11 +9,13 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
+import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 //import com.google.gwt.sample.stockwatcher.client.LoginInfo;
@@ -47,7 +49,7 @@ public class VandelayIndustries implements EntryPoint {
 	    }
 	  }
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private TabLayoutPanel tabPanel = new TabLayoutPanel(2, Unit.EM);
+	private TabPanel tabPanel = new TabPanel();
 	private VerticalPanel searchAndDisplayPanel = new VerticalPanel();
 	private HorizontalPanel searchPanel = new HorizontalPanel();
 	private TextBox searchBox = new TextBox();
@@ -107,7 +109,8 @@ private Button searchButton = new Button("Search");
 		searchAndDisplayPanel.add(table);
 		
 		tabPanel.add(searchAndDisplayPanel, "Search");
-		tabPanel.add(searchAndDisplayPanel, "Favourites");
+		
+		tabPanel.selectTab(0);
 		
 		mainPanel.add(tabPanel);
 		

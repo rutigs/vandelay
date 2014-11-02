@@ -11,23 +11,26 @@ body {
 .searchAndDisplayPanel {
   display: box;
   border: 2px blue;
-  padding: 2px;
+  padding: 4px;
 }
 
 .searchPanel {
-  display: inline;
   border: 2px blue;
-  padding: 2px;
+  padding: 4px;
 }
 
 .searchBox {
   border: 2px blue;
+  padding: 8px;
 }
 
 .scrollDownBox {
   border: 1px grey;
+  padding: 8px;
 }
 
 .searchButton {
-  width: 50px;
+	
+  padding: 8px;
+  text-align: center;
 }
