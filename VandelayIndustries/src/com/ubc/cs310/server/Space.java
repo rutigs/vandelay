@@ -14,6 +14,17 @@ private String ownership;
 public Space(){
 }
 
+public Space(String name, String url, String type, String primaryUse, String address, 
+		String localArea, String ownership) {
+	this.name = name;
+	this.url = url;
+	this.type = type;
+	this.primaryUse = primaryUse;
+	this.address = address;
+	this.localArea = localArea;
+	this.ownership = ownership;
+}
+
 public void setName(String name){
 	this.name = name;
 }

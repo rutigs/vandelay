@@ -6,10 +6,10 @@ import com.ubc.cs310.server.SpaceServiceImpl;
 import com.ubc.cs310.server.Space;
 
 public class TestActivitySearch {
-
+	
 	// Create Spaces here
 	Space space1 = new Space();
-	space1.setType("English word");
+	space1.setType("English Word");
 	Space space2 = new Space();
 	space2.setType("Old English");
 	Space space3 = new Space();
