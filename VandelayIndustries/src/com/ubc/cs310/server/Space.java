@@ -16,7 +16,7 @@ public void setName(String name){
 	this.name = name;
 }
 
-public void setUrl(String url){
+public void setURL(String url){
 	this.url = url;
 }
 
