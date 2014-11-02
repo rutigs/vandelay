@@ -9,42 +9,45 @@ public class TestTitleSearch {
 
 	// Create Spaces here
 	Space space1 = new Space();
+	space1.setName("English word");
 	Space space2 = new Space();
+	space2.setName("Old English");
 	Space space3 = new Space();
+	space3.setName("New Language");
 	
 	// Create parameters here
 	String noMatches = "Card";
-	String param1 = "";
-	String param2 = "";
+	String param1 = "word";
+	String param2 = "English";
 	
 	// Test empty list of Spaces (this shouldn't happen in reality)
 	@Test
-	private void testEmptyTitleSearch() {
+	public void testEmptyTitleSearch() {
 		ArrayList<Space> emptyTitleList = new ArrayList<Space>();
-		assertEquals(emptyTitleList, SpaceServiceImpl.titleSearch(noMatches, emptyTitleList));
+		assertArrayEquals(emptyTitleList, SpaceServiceImpl.titleSearch(noMatches, emptyTitleList));
 	}
 	
 	// Test empty string as parameter expect full list returned
 	@Test
-	private void testEmptyParamTitleSearch() {
+	public void testEmptyParamTitleSearch() {
 		ArrayList<Space> titleList = new ArrayList<Space>();
 		titleList.add(space1);
-		assertEquals(titleList, SpaceServiceImpl.titleSearch("", titleList));
+		assertArrayEquals(titleList, SpaceServiceImpl.titleSearch("", titleList));
 	}
 	
 	@Test
-	private void testOneTitleSearch() {
+	public void testOneTitleSearch() {
 		ArrayList<Space> titleList = new ArrayList<Space>();
 		titleList.add(space1);
 		titleList.add(space2);
 		titleList.add(space3);
 		ArrayList<Space> resultList = new ArrayList<Space>();
 		resultList.add(space1);
-		assertEquals(resultList, SpaceServiceImpl.titleSearch(param1, titleList));
+		assertArrayEquals(resultList, SpaceServiceImpl.titleSearch(param1, titleList));
 	}
 	
 	@Test
-	private void testTwoTitleSearch() {
+	public void testTwoTitleSearch() {
 		ArrayList<Space> titleList = new ArrayList<Space>();
 		titleList.add(space1);
 		titleList.add(space2);
@@ -52,14 +55,14 @@ public class TestTitleSearch {
 		ArrayList<Space> resultList = new ArrayList<Space>();
 		resultList.add(space1);
 		resultList.add(space2);
-		assertEquals(resultList, SpaceServiceImpl.titleSearch(param2, titleList));
+		assertArrayEquals(resultList, SpaceServiceImpl.titleSearch(param2, titleList));
 	}
 	
 	@Test
-	private void testInvalidTitleSearch() {
+	public void testInvalidTitleSearch() {
 		ArrayList<Space> titleList = new ArrayList<Space>();
 		titleList.add(space1);
 		ArrayList<Space> resultList = new ArrayList<Space>();
-		assertEquals(resultList, SpaceServiceImpl.titleSearch(noMatches, titleList));
+		assertArrayEquals(resultList, SpaceServiceImpl.titleSearch(noMatches, titleList));
 	}
 }

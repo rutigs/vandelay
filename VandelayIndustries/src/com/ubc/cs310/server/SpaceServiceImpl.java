@@ -1,9 +1,8 @@
 package com.ubc.cs310.server;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import com.ubc.cs310.client.GreetingService;
+import com.ubc.cs310.client.SpaceService;
 import com.ubc.cs310.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -12,9 +11,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 @SuppressWarnings("serial")
 public class SpaceServiceImpl extends RemoteServiceServlet implements
-		GreetingService {
+		SpaceService {
 
-	public String greetServer(String input) throws IllegalArgumentException {
+	public String spaceServer(String input) throws IllegalArgumentException {
 		// Verify that the input is valid. 
 		if (!FieldVerifier.isValidName(input)) {
 			// If the input is not valid, throw an IllegalArgumentException back to
@@ -40,8 +39,8 @@ public class SpaceServiceImpl extends RemoteServiceServlet implements
 		// loop through elements of oriinalList
 		for(Space space : originalList) {
 			// use regex *parameter* to test equivalence
-			String title = space.getName(); //code getActivity
-			if(title.matches("*" + parameter + "*")) {
+			String title = space.getName().toLowerCase(); //code getActivity
+			if(title.matches("*" + parameter.toLowerCase() + "*")) {
 				titleList.add(space);
 			}
 		} // case of empty string for parameter should be covered by for loop
@@ -54,8 +53,8 @@ public class SpaceServiceImpl extends RemoteServiceServlet implements
 		// loop through elements of oriinalList
 		for(Space space : originalList) {
 			// use regex *parameter* to test equivalence
-			String activity = space.getType();
-			if(activity.matches("*" + parameter + "*")) {
+			String activity = space.getType().toLowerCase();
+			if(activity.matches("*" + parameter.toLowerCase() + "*")) {
 				activityList.add(space);
 			}
 		} // case of empty string for parameter should be covered by for loop
