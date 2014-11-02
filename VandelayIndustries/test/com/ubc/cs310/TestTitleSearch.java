@@ -12,7 +12,7 @@ public class TestTitleSearch {
 	Space space1 = new Space("English Word", "", "", "", "", "", "");
 	Space space2 = new Space("Old English", "", "", "", "", "", "");
 	Space space3 = new Space("New Language", "", "", "", "", "", "");
-	
+
 	// Create parameters here
 	String noMatches = "Card";
 	String param1 = "word";

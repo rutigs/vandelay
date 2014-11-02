@@ -12,6 +12,13 @@ private String ownership;
 //private Location location;
 
 public Space(){
+	this.name = "";
+	this.url = "";
+	this.type = "";
+	this.primaryUse = "";
+	this.address = "";
+	this.localArea = "";
+	this.ownership = "";
 }
 
 public Space(String name, String url, String type, String primaryUse, String address, 
