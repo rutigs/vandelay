@@ -34,7 +34,7 @@ public class SpaceServiceImpl extends RemoteServiceServlet implements
 				+ ".<br><br>It looks like you are using:<br>" + userAgent;
 	}
 	
-	public ArrayList<Space> titleSearch(String parameter, ArrayList<Space> originalList) { //create Space class
+	public static ArrayList<Space> titleSearch(String parameter, ArrayList<Space> originalList) { //create Space class
 		// create empty list of search results
 		ArrayList<Space> titleList = new ArrayList<Space>();
 		// loop through elements of oriinalList
@@ -48,7 +48,7 @@ public class SpaceServiceImpl extends RemoteServiceServlet implements
 		return titleList;
 	}
 	
-	public ArrayList<Space> activitySearch(String parameter, ArrayList<Space> originalList) { //create Space class
+	public static ArrayList<Space> activitySearch(String parameter, ArrayList<Space> originalList) { //create Space class
 		// create empty list of search results
 		ArrayList<Space> activityList = new ArrayList<Space>();
 		// loop through elements of oriinalList
