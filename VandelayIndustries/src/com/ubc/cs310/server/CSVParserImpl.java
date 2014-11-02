@@ -63,19 +63,78 @@ public class CSVParserImpl extends RemoteServiceServlet implements
 			String line = "";
 			String splitBy = ",";
 			while ((line = br.readLine()) != null) {
-
+				String name = new String();
+				String urlString = new String();
+				String type = new String();
+				String primaryUse = new String();
+				String address = new String();
+				String localArea = new String();
+				String ownership = new String();
+				
 				// Split attributes by commas.
 				String[] attributes = line.split(splitBy);
 
-				// Set attributes for the space.
-				String name = attributes[0];
-				String urlString = attributes[1];
-				String type = attributes[2];
-				String primaryUse = attributes[3];
-				String address = attributes[4];
-				String localArea = attributes[5];
-				String ownership = attributes[6];
-
+				for(int i = 0; i<8;i++){
+					switch(i)
+					{
+					case 0:
+						if(attributes[0] == ""){
+							name = "N/A";
+							break;
+						}
+						else
+							name = attributes[0];
+							break;
+					case 1:
+						if(attributes[1] == ""){
+							urlString = "N/A";
+							break;
+						}
+						else
+							urlString = attributes[1];
+							break;
+					case 2:
+						if(attributes[2] == ""){
+							type = "N/A";
+							break;
+						}
+						else
+							type = attributes[2];
+							break;
+					case 3:
+						if(attributes[3] == ""){
+							primaryUse = "N/A";
+							break;
+						}
+						else
+							primaryUse = attributes[3];
+					case 4:
+						if(attributes[4] == ""){
+							address = "N/A";
+							break;
+						}
+						else 
+							address = attributes[4];
+							break;
+					case 5:
+						if(attributes[5] == ""){
+							localArea = "N/A";
+							break;
+						}
+						else
+							localArea = attributes[5];
+							break;
+					case 6:
+						if(attributes[6] == ""){
+							ownership = "N/A";
+							break;
+						}
+						else
+							ownership = attributes[6];
+							break;
+					}
+				}
+				
 				// To be implemented in second sprint.
 				/*
 				 * float lon = Float.parseFloat(attributes[10]); float lat =
