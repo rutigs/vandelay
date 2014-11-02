@@ -1,3 +1,5 @@
+package com.ubc.cs310.server;
+
 public class Space{
 
 private String name;

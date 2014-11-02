@@ -1,9 +1,8 @@
 package com.ubc.cs310.server;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import com.ubc.cs310.client.GreetingService;
+import com.ubc.cs310.client.SpaceService;
 import com.ubc.cs310.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -12,9 +11,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 @SuppressWarnings("serial")
 public class SpaceServiceImpl extends RemoteServiceServlet implements
-		GreetingService {
+		SpaceService {
 
-	public String greetServer(String input) throws IllegalArgumentException {
+	public String spaceServer(String input) throws IllegalArgumentException {
 		// Verify that the input is valid. 
 		if (!FieldVerifier.isValidName(input)) {
 			// If the input is not valid, throw an IllegalArgumentException back to
