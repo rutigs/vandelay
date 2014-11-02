@@ -39,8 +39,8 @@ public class SpaceServiceImpl extends RemoteServiceServlet implements
 		// loop through elements of oriinalList
 		for(Space space : originalList) {
 			// use regex *parameter* to test equivalence
-			String title = space.getName(); //code getActivity
-			if(title.matches("*" + parameter + "*")) {
+			String title = space.getName().toLowerCase(); //code getActivity
+			if(title.matches("*" + parameter.toLowerCase() + "*")) {
 				titleList.add(space);
 			}
 		} // case of empty string for parameter should be covered by for loop
@@ -53,8 +53,8 @@ public class SpaceServiceImpl extends RemoteServiceServlet implements
 		// loop through elements of oriinalList
 		for(Space space : originalList) {
 			// use regex *parameter* to test equivalence
-			String activity = space.getType();
-			if(activity.matches("*" + parameter + "*")) {
+			String activity = space.getType().toLowerCase();
+			if(activity.matches("*" + parameter.toLowerCase() + "*")) {
 				activityList.add(space);
 			}
 		} // case of empty string for parameter should be covered by for loop

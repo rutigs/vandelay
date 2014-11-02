@@ -9,13 +9,16 @@ public class TestTitleSearch {
 
 	// Create Spaces here
 	Space space1 = new Space();
+	space1.setName("English word");
 	Space space2 = new Space();
+	space2.setName("Old English");
 	Space space3 = new Space();
+	space3.setName("New Language");
 	
 	// Create parameters here
 	String noMatches = "Card";
-	String param1 = "";
-	String param2 = "";
+	String param1 = "word";
+	String param2 = "English";
 	
 	// Test empty list of Spaces (this shouldn't happen in reality)
 	@Test

@@ -2,8 +2,6 @@ package com.ubc.cs310;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.ibm.icu.impl.Assert;
 import com.ubc.cs310.server.SpaceServiceImpl;
 import com.ubc.cs310.server.Space;
 
@@ -11,13 +9,16 @@ public class TestActivitySearch {
 
 	// Create Spaces here
 	Space space1 = new Space();
+	space1.setType("English word");
 	Space space2 = new Space();
+	space2.setType("Old English");
 	Space space3 = new Space();
+	space3.setType("New Language");
 	
 	// Create parameters here
 	String noMatches = "Card";
-	String param1 = "";
-	String param2 = "";
+	String param1 = "word";
+	String param2 = "English";
 	
 	// Test empty list of Spaces (this shouldn't happen in reality)
 	@Test
