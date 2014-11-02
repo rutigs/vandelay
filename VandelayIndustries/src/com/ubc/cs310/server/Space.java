@@ -9,7 +9,7 @@ private String primaryUse;
 private String address;
 private String localArea;
 private String ownership;
-private Location location;
+//private Location location;
 
 public Space(){
 }
@@ -42,9 +42,9 @@ public void setOwnership(String ownership){
 	this.ownership = ownership;
 }
 
-public void setLocation(String address, float lat, float lon){
+/*public void setLocation(String address, float lat, float lon){
 	this.location = new Location(address, lat, lon)
-}
+}*/
 
 public String getName(){
 	return this.name;
@@ -74,8 +74,8 @@ public String getOwnerShip(){
 	return this.ownership;
 }
 
-public Location getLocation(){
+/*public Location getLocation(){
 	return this.location;
 }
-
+*/
 }
