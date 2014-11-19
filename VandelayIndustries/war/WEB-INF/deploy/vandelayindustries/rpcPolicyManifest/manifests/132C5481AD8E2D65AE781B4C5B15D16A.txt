@@ -1,2 +1,0 @@
-serviceClass: com.ubc.cs310.client.LoginService
-path: 77A5F2D9A36B26CF402C179F92D2E6BC.gwt.rpc

@@ -1,2 +1,0 @@
-serviceClass: com.ubc.cs310.client.GreetingService
-path: BFF99D9D0539925D11F1FF5D3D129E5E.gwt.rpc
