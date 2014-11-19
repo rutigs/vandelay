@@ -1,0 +1,2 @@
+serviceClass: com.ubc.cs310.vandelay.client.LoginService
+path: 8DE21B47FA2F30FE70C600F49CD84ABC.gwt.rpc

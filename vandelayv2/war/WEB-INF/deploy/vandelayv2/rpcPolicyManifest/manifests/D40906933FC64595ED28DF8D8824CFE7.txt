@@ -1,0 +1,2 @@
+serviceClass: com.ubc.cs310.vandelay.client.CSVParserService
+path: 58EB00743FC9DA7C1875152CF186BAAE.gwt.rpc

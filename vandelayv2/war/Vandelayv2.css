@@ -1,0 +1,38 @@
+body {
+  padding: 10px;
+}
+
+.tabPanel {
+  display: box;
+  border: 2px blue;
+  padding: 2px;
+}
+
+.searchAndDisplayPanel {
+  display: box;
+  border: 2px blue;
+  padding: 4px;
+}
+
+.searchPanel {
+  border: 2px blue;
+  padding: 4px;
+}
+
+.searchBox {
+  border: 1px grey;
+  padding: 8px;
+}
+
+.scrollDownBox {
+  border: 1px grey;
+  padding: 8px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.searchButton {
+  padding: 8px;
+  text-align: center;
+  margin-left: 20px;
+}
