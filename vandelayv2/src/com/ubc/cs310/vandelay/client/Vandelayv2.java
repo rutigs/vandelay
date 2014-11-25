@@ -61,7 +61,6 @@ public class Vandelayv2 implements EntryPoint {
 	private List<Space> favouriteSpaces = new ArrayList<Space>();
 	private List<Space> filteredFavourites = new ArrayList<Space>();
 	private CellTable<Space> table;
-	private CellTable<Space> favTable;
 	private final CSVParserServiceAsync csvParser = GWT.create(CSVParserService.class);
 	private static final Logger LOG = Logger.getLogger(Vandelayv2.class.getName());
 	private LoginInfo loginInfo = null;
@@ -70,13 +69,19 @@ public class Vandelayv2 implements EntryPoint {
 			"Please sign in to your Google Account to access the Cultural Spaces application.");
 	private Anchor signInLink = new Anchor("Sign In");
 	private Anchor signOutLink = new Anchor("Sign Out");
-	private VerticalPanel favouritesPanel = new VerticalPanel();
 	private DialogBox popup = new DialogBox();
 	private VerticalPanel popPanel = new VerticalPanel();
+	private DialogBox popupFav = new DialogBox();
+	private VerticalPanel popPanelFav = new VerticalPanel();
 	private Button resetButton = new Button("Reset");
 	private Button addFavourite = new Button("Add To Favourites");
 	private Button removeFavourite = new Button("Remove From Favourites");
-	private VerticalPanel favouritesAndDisplayPanel = new VerticalPanel();
+	private VerticalPanel favouritesPanel = new VerticalPanel();
+	private HorizontalPanel favouritesSearchPanel = new HorizontalPanel();
+	private TextBox favSearchBox = new TextBox();
+	private Button favSearchButton = new Button("Search");
+	private Button favResetButton = new Button("Reset");
+	private CellTable<Space> favTable;
 	private ScrollPanel scrollFavPanel = new ScrollPanel();
 	private HorizontalPanel adminPanel = new HorizontalPanel();
 	private TextBox adminData = new TextBox();
@@ -93,6 +98,7 @@ public class Vandelayv2 implements EntryPoint {
 			}
 			public void onSuccess(LoginInfo result) {
 				loginInfo = result;
+				//loadAdminPanel();
 				if(loginInfo.getEmailAddress() == "rutigliano.nick@gmail.com") {
 					LOG.log(Level.INFO, "attempting to loadAdminPanel()");
 					loadAdminPanel();
@@ -116,20 +122,6 @@ public class Vandelayv2 implements EntryPoint {
 		adminPanel.add(signOutLink);
 		RootPanel.get("spaces").add(adminPanel);
 		adminButton.addClickHandler(new ClickHandler() {
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				String url = adminData.getText().trim();
-//				if((url.equals("http://")) || (url.equals(""))) {
-//					Window.alert("The website is invalid has not been loaded");
-//					loadVandelay();
-//				} else {
-//					LOG.log(Level.INFO, "The url where the data is located is: " + url);
-////					if(!url.contains("http"))
-////						url = "http://" + url;
-//					parseAndPersistData(url);
-//					LOG.log(Level.INFO, "parse has happened");
-//				}
-//			}
 			@Override
 			public void onClick(ClickEvent event) {
 				if(adminData.getText().trim().equals("")) {
@@ -181,7 +173,7 @@ public class Vandelayv2 implements EntryPoint {
 
 		signOutLink.setHref(loginInfo.getLogoutUrl());
 
-		table = makeTable();
+		table = makeTable((ArrayList<Space>) spaces);
 		//key = AIzaSyDiDsB0QlBDJzDcE4UybUeEhxM91rM3HDI
 		Maps.loadMapsApi("", "2", false, new Runnable() {
 		      public void run() {
@@ -200,7 +192,6 @@ public class Vandelayv2 implements EntryPoint {
 		searchButton.addStyleName("searchButton");
 		resetButton.addStyleName("searchButton");
 		table.addStyleName("spacesTable");
-		favouritesPanel.addStyleName("searchAndDisplayPanel");
 		scrollPanel.addStyleName("scrollPanel");
 		mapPanel.addStyleName("mapPanel");
 		addFavourite.addStyleName("addFavouriteButton");
@@ -208,6 +199,11 @@ public class Vandelayv2 implements EntryPoint {
 		scrollFavPanel.addStyleName("scrollPanel");
 		popPanel.addStyleName("popPanel");
 		popup.addStyleName("popup");
+		favouritesPanel.addStyleName("searchAndDisplayPanel");
+		favouritesSearchPanel.addStyleName("searchPanel");
+		favSearchBox.addStyleName("searchBox");
+		favSearchButton.addStyleName("searchButton");
+		favResetButton.addStyleName("searchButton");
 
 		filterBox.addItem("Select Type");
 		filterBox.addItem("Museum/Gallery");
@@ -217,8 +213,8 @@ public class Vandelayv2 implements EntryPoint {
 		filterBox.addItem("Educational");
 		filterBox.addItem("Cafe/Restaurant/Bar");
 		
-		areaBox.addItem("Select Local Area"); // base case
-		areaBox.addItem(""); // deals with spaces without set area
+		areaBox.addItem("Select Local Area");
+		areaBox.addItem(""); 
 		areaBox.addItem("Kitsilano");
 		areaBox.addItem("Strathcona");
 		areaBox.addItem("West Point Grey");
@@ -253,7 +249,7 @@ public class Vandelayv2 implements EntryPoint {
 		searchAndDisplayPanel.add(scrollPanel);
 
 		tabPanel.add(searchAndDisplayPanel, "Search");
-		tabPanel.add(favouritesPanel, "Favourites");
+		//tabPanel.add(favouritesPanel, "Favourites");
 
 		tabPanel.selectTab(0);
 
@@ -480,7 +476,7 @@ public class Vandelayv2 implements EntryPoint {
 									//handleError(error);
 								}
 								public void onSuccess(Void ignore) {
-									updateFavouritesTable();
+									updateFavourites();
 								}	
 							});
 						}
@@ -506,7 +502,7 @@ public class Vandelayv2 implements EntryPoint {
 	public void buildFavourites() {
 		csvParser.getFavourites(new AsyncCallback<ArrayList<String>>() {
 			public void onFailure(Throwable error) {
-				LOG.log(Level.WARNING, "Warning parse failed");
+				LOG.log(Level.WARNING, "Warning get favourites failed");
 				//handleError(error);
 			}
 
@@ -531,10 +527,120 @@ public class Vandelayv2 implements EntryPoint {
 	}
 	
 	public void displayFavourites() {
-	
+		favTable = makeTable((ArrayList<Space>) favouriteSpaces);
+		
+		favouritesSearchPanel.add(favSearchBox);
+		favouritesSearchPanel.add(favSearchButton);
+		favouritesSearchPanel.add(favResetButton);
+		
+		scrollFavPanel.add(favTable);
+		
+		favouritesPanel.add(favouritesSearchPanel);
+		favouritesPanel.add(scrollFavPanel);
+		
+		tabPanel.add(favouritesPanel, "Favourites");
+		
+		favSearchButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(favSearchBox.getText().trim().equals("")) {
+					filteredFavourites = favouriteSpaces;
+					updateFavTableBySearch();
+				} else {
+				filteredFavourites = titleSearch(favSearchBox.getText().trim(), (ArrayList<Space>) favouriteSpaces);
+				updateFavTableBySearch();
+				}
+			}
+		});
+		
+		favResetButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				favSearchBox.setText("");
+				filteredFavourites = favouriteSpaces;
+				updateFavTableBySearch();
+			}
+		});
+		
+		final SingleSelectionModel<Space> selectionModelFav = new SingleSelectionModel<Space>();
+		favTable.setSelectionModel(selectionModelFav);
+		selectionModelFav.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+			public void onSelectionChange(SelectionChangeEvent event) {
+				final Space selected = selectionModelFav.getSelectedObject();
+				if (selected != null) {
+					//LatLng spaceLocn = LatLng.newInstance(selected.getLat(), selected.getLon());
+					popupFav.clear();
+					popPanelFav.clear();
+					String site = selected.getURL();
+					if(!(site.contains("http")))
+						site = "http://" + site;
+					String linkString = "<a href='" + site + "'> " + site;
+					HTML link2 = new HTML(linkString);
+					popPanelFav.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+					popPanelFav.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+					popPanelFav.add(link2);
+					popPanelFav.add(removeFavourite);
+					
+					removeFavourite.addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							csvParser.deleteFavourite(selected, new AsyncCallback<Void>() {
+								public void onFailure(Throwable error) {
+									//handleError(error);
+								}
+								public void onSuccess(Void ignore) {
+									updateFavourites();
+								}	
+							});
+						}
+					});
+					
+					popupFav.setAutoHideEnabled(true);
+					popupFav.setAnimationEnabled(true);
+					popupFav.setText("Copy this link to get more info or share to social media!");
+					popupFav.add(popPanelFav);
+					//map.setCenter(spaceLocn, 12); also add window popup 
+					// might require making map accessible by creating MapWidget before buildMap();
+					popupFav.center();
+					popupFav.show();
+				}
+			}
+
+		});
 	}
 	
-	public void updateFavouritesTable() {};
+	public void updateFavTableBySearch() {
+		
+		favTable.setPageSize(filteredFavourites.size()+1);
+		favTable.setRowCount(filteredFavourites.size(), true);
+		favTable.setVisibleRange(0, filteredFavourites.size());
+		favTable.setRowData(0, filteredFavourites);
+	}
+	
+//	public void updateFavouritesTable() {
+//		updateFavourites();
+//		
+//		favTable.setPageSize(favouriteSpaces.size()+1);
+//		favTable.setRowCount(favouriteSpaces.size(), true);
+//		favTable.setVisibleRange(0, favouriteSpaces.size());
+//		favTable.setRowData(0, favouriteSpaces);
+//	};
+	
+	public void updateFavourites() {
+		csvParser.getFavourites(new AsyncCallback<ArrayList<String>>() {
+			public void onFailure(Throwable error) {
+				LOG.log(Level.WARNING, "Warning get favourites failed");
+				//handleError(error);
+			}
+
+			public void onSuccess(ArrayList<String> result) {
+				favouriteSpaces = getFavouritesAsSpaces(result);
+				filteredFavourites = favouriteSpaces;
+				LOG.log(Level.INFO, "Number of filteredFavourites before filtering: " + filteredSpaces.size());
+				displayFavourites();
+			}
+		});
+	}
 
 	public void buildMap() {
 		
@@ -588,7 +694,7 @@ public class Vandelayv2 implements EntryPoint {
 	    map.setCenter(vancouver, 11);
 	    mapPanel.add(map);
 	    
-//	    
+	    
 //	    // Add a marker
 	    //map.addOverlay(new Marker(cawkerCity));
 
@@ -708,9 +814,10 @@ public class Vandelayv2 implements EntryPoint {
 		return areaList;
 	}
 
-	private CellTable makeTable() {
+	private CellTable<Space> makeTable(ArrayList<Space> list) {
 
-		table = new CellTable<Space>();
+		CellTable<Space> tableSpaces = new CellTable<Space>();
+		//table = new CellTable<Space>();
 
 		TextColumn<Space> nameColumn = new TextColumn<Space>() {
 			@Override
@@ -762,19 +869,19 @@ public class Vandelayv2 implements EntryPoint {
 		};
 
 
-		table.addColumn(nameColumn, "Name");
-		table.addColumn(typeColumn, "Type");
-		table.addColumn(useColumn, "Use");
-		table.addColumn(urlColumn, "URL");
-		table.addColumn(areaColumn, "Area");
-		table.addColumn(addressColumn, "Address");
-		table.addColumn(ownershipColumn, "Ownership");
+		tableSpaces.addColumn(nameColumn, "Name");
+		tableSpaces.addColumn(typeColumn, "Type");
+		tableSpaces.addColumn(useColumn, "Use");
+		tableSpaces.addColumn(urlColumn, "URL");
+		tableSpaces.addColumn(areaColumn, "Area");
+		tableSpaces.addColumn(addressColumn, "Address");
+		tableSpaces.addColumn(ownershipColumn, "Ownership");
 
-		table.setRowCount(spaces.size(), true);
-		table.setVisibleRange(0, spaces.size());
-		table.setRowData(0, spaces);
+		tableSpaces.setRowCount(list.size(), true);
+		tableSpaces.setVisibleRange(0, list.size());
+		tableSpaces.setRowData(0, list);
 
-		return table;
+		return tableSpaces;
 	};
 
 	private void makeTable2() {
