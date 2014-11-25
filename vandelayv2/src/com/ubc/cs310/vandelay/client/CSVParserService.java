@@ -17,4 +17,5 @@ public interface CSVParserService extends RemoteService {
 	ArrayList<String> getFavourites();
 	void addFavourite(Space space);
 	void deleteFavourite(Space space);
+	boolean checkFavourite(Space space);
 }

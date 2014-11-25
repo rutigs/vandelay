@@ -16,5 +16,6 @@ public interface CSVParserServiceAsync {
 	void getFavourites(AsyncCallback<ArrayList<String>> callback);
 	void addFavourite(Space space, AsyncCallback<Void> async);
 	void deleteFavourite(Space space, AsyncCallback<Void> async);
+	void checkFavourite(Space space, AsyncCallback<Boolean> async);
 }
 

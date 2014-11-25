@@ -66,6 +66,24 @@ CSVParserService {
 		}
 		return (ArrayList<String>) favourites;
 	}
+	
+	public boolean checkFavourite(Space space) {
+		PersistenceManager pm = getPersistenceManager();
+		boolean found = false;
+		try {
+			Query q = pm.newQuery(FavouriteSpace.class, "user == u");
+			q.declareParameters("com.google.appengine.api.users.User u");
+			List<FavouriteSpace> favs = (List<FavouriteSpace>) q.execute(getUser());
+			for(FavouriteSpace favourite : favs) {
+				if(space.equals(favourite.getSpace())) {
+					found = true;
+				}
+			}
+		} finally {
+			pm.close();
+		}
+		return found;
+	}
 
 	public void deleteFavourite(Space space) {
 		PersistenceManager pm = getPersistenceManager();
