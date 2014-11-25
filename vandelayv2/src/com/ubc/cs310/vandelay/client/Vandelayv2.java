@@ -242,6 +242,7 @@ public class Vandelayv2 implements EntryPoint {
 		searchPanel.add(searchButton);
 		searchPanel.add(resetButton);
 
+		scrollFavPanel.setHeight("400px");
 		scrollPanel.setHeight("400px");
 		scrollPanel.add(table);
 
@@ -622,14 +623,12 @@ public class Vandelayv2 implements EntryPoint {
 		favTable.setRowData(0, filteredFavourites);
 	}
 
-	//	public void updateFavouritesTable() {
-	//		updateFavourites();
-	//		
-	//		favTable.setPageSize(favouriteSpaces.size()+1);
-	//		favTable.setRowCount(favouriteSpaces.size(), true);
-	//		favTable.setVisibleRange(0, favouriteSpaces.size());
-	//		favTable.setRowData(0, favouriteSpaces);
-	//	};
+	public void updateFavouritesTable() {
+		favTable.setPageSize(favouriteSpaces.size()+1);
+		favTable.setRowCount(favouriteSpaces.size(), true);
+		favTable.setVisibleRange(0, favouriteSpaces.size());
+		favTable.setRowData(0, favouriteSpaces);
+	};
 
 	public void updateFavourites() {
 		csvParser.getFavourites(new AsyncCallback<ArrayList<String>>() {
@@ -642,7 +641,7 @@ public class Vandelayv2 implements EntryPoint {
 				favouriteSpaces = getFavouritesAsSpaces(result);
 				filteredFavourites = favouriteSpaces;
 				LOG.log(Level.INFO, "Number of filteredFavourites before filtering: " + filteredSpaces.size());
-				displayFavourites();
+				updateFavouritesTable();
 			}
 		});
 	}
