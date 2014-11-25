@@ -22,17 +22,49 @@ body {
 .searchBox {
   border: 1px grey;
   padding: 8px;
+  margin-right: 20px;
 }
 
 .scrollDownBox {
   border: 1px grey;
   padding: 8px;
-  margin-left: 20px;
   margin-right: 20px;
 }
 
 .searchButton {
+  margin-left: 20px;
+  margin-right: 20px; 
   padding: 8px;
   text-align: center;
   margin-left: 20px;
+}
+
+
+.mapPanel {
+  vertical-align: middle;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mainPanel {
+  vertical-align: middle;
+}
+
+.popPanel {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.addFavouriteButton {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.popup {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }

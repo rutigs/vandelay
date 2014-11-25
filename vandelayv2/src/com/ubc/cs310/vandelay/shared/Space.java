@@ -2,18 +2,35 @@ package com.ubc.cs310.vandelay.shared;
 
 import java.io.Serializable;
 
-import com.google.gwt.maps.client.geom.LatLng;
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 
+@PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class Space implements Serializable {
 
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	private Long id;
+	@Persistent
 	private String name;
+	@Persistent
 	private String url;
+	@Persistent
 	private String type;
+	@Persistent
 	private String primaryUse;
+	@Persistent
 	private String address;
+	@Persistent
 	private String localArea;
+	@Persistent
 	private String ownership;
+	@Persistent
 	private double lat;
+	@Persistent
 	private double lon;
 
 	public Space(){
@@ -38,7 +55,10 @@ public class Space implements Serializable {
 		this.lat = lat;
 		this.lon = lon;
 	}
-
+	public Long getId() {
+		return this.id;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}

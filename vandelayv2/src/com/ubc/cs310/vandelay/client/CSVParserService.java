@@ -12,5 +12,9 @@ import com.ubc.cs310.vandelay.shared.Space;
 @RemoteServiceRelativePath("parse")
 public interface CSVParserService extends RemoteService {
 	String CSVParse(String name) throws IllegalArgumentException;
-	ArrayList<Space> parse();
+	void parse(String url);
+	ArrayList<Space> getSpaces();
+	ArrayList<String> getFavourites();
+	void addFavourite(Space space);
+	void deleteFavourite(Space space);
 }

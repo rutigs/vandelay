@@ -1,2 +1,4 @@
 # Module vandelayv2
 # RPC service class, partial path of RPC policy file
+com.ubc.cs310.vandelay.client.CSVParserService, EC0717F9783BFFF0B727B0411F800EC2.gwt.rpc
+com.ubc.cs310.vandelay.client.LoginService, 8DE21B47FA2F30FE70C600F49CD84ABC.gwt.rpc

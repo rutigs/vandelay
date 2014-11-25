@@ -5,23 +5,88 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-//import java.net.URL;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import java.net.URLConnection;
 import java.util.ArrayList;
-//import java.util.List;
+import java.util.List;
+import java.util.logging.Level;
+
+import javax.jdo.JDOHelper;
+import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
 
 import com.ubc.cs310.vandelay.client.CSVParserService;
 import com.ubc.cs310.vandelay.shared.Space;
-import com.google.gwt.maps.client.geom.LatLng;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+//import com.google.gwt.http.client.URL;
+//import com.google.gwt.http.client.URL;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import java.util.logging.Logger;
 
 /**
  * The server-side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
 public class CSVParserServiceImpl extends RemoteServiceServlet implements
-		CSVParserService {
-	
-//	private static final Logger LOG = LogCSVParserServiceImpl(CSVParserImpl.class.getName());
+CSVParserService {
+
+	private static final Logger LOG = Logger.getLogger(CSVParserServiceImpl.class.getName());
+
+	private static final PersistenceManagerFactory PMF =
+			JDOHelper.getPersistenceManagerFactory("transactions-optional");
+
+	public void addFavourite(Space space) {
+		PersistenceManager pm = getPersistenceManager();
+		try {
+			String spaceStr = space.getName();
+			pm.makePersistent(new FavouriteSpace(getUser(), spaceStr));
+		} finally {
+			pm.close();
+		}
+	}
+
+	public ArrayList<String> getFavourites() {
+		PersistenceManager pm = getPersistenceManager();
+		List<String> favourites = new ArrayList<String>();
+		try {
+			Query q = pm.newQuery(FavouriteSpace.class, "user == u");
+			q.declareParameters("com.google.appengine.api.users.User u");
+			List<FavouriteSpace> favs = (List<FavouriteSpace>) q.execute(getUser());
+			for(FavouriteSpace favourite : favs) {
+				favourites.add(favourite.getSpace());
+			}
+		} finally {
+			pm.close();
+		}
+		return (ArrayList<String>) favourites;
+	}
+
+	public void deleteFavourite(Space space) {
+		PersistenceManager pm = getPersistenceManager();
+		try {
+			//			long deleteCount = 0;
+			Query q = pm.newQuery(FavouriteSpace.class, "user == u");
+			q.declareParameters("com.google.appengine.api.users.User u");
+			List<FavouriteSpace> favs = (List<FavouriteSpace>) q.execute(getUser());
+			for(FavouriteSpace favourite : favs) {
+				if(space.equals(favourite.getSpace())) {
+					//		    		deleteCount++;
+					pm.deletePersistent(favourite);
+				}			
+			}
+			//		    if (deleteCount != 1) {
+			//		        LOG.log(Level.WARNING, "removeStock deleted "+deleteCount+" Stocks");
+			//		      }
+		} finally {
+			pm.close();
+		}
+	}
 
 	public String CSVParse(String input) throws IllegalArgumentException {
 
@@ -50,24 +115,34 @@ public class CSVParserServiceImpl extends RemoteServiceServlet implements
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
 				.replaceAll(">", "&gt;");
 	}
-	
-	public ArrayList<Space> parse() {
+
+	public void parse(String url) {
 		BufferedReader br = null;
 		ArrayList<Space> spaces = new ArrayList<Space>();
+		
+		LOG.log(Level.INFO, "The url we are trying to parse from: " + url);
+		
+//		URL url2 = new URL(url);
+//		URLConnection urlConnection = url2.openConnection();
+//		InputStream is = urlConnection.getInputStream();
+//		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
 		try {
 
-			InputStream iStream = this.getClass().getClassLoader().getResourceAsStream("CulturalSpaces.csv");
-			// Create a reader for the input stream.
-			br = new BufferedReader(new InputStreamReader(iStream));
-			
+			URL url2 = new URL(url);
+			URLConnection urlConnection = url2.openConnection();
+			//InputStream is = urlConnection.getInputStream();
+			//br = new BufferedReader(new InputStreamReader(url2.openStream()));
+			br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+
+
 			//	Testing log for BufferedReader
-//			StringBuilder out = new StringBuilder();
-//			String line2;
-//			while ((line2 = br.readLine()) != null) {
-//				out.append(line2);
-//			}
-//			LOG.log(Level.INFO, out.toString());
+			//			StringBuilder out = new StringBuilder();
+			//			String line2;
+			//			while ((line2 = br.readLine()) != null) {
+			//				out.append(line2);
+			//			}
+			//			LOG.log(Level.INFO, out.toString());
 
 			String line = "";
 			String splitBy = ",";
@@ -82,7 +157,7 @@ public class CSVParserServiceImpl extends RemoteServiceServlet implements
 				String ownership = new String();
 				double lat = 0;
 				double lon = 0;
-				
+
 				// Split attributes by commas.
 				String[] attributes = line.split(splitBy);
 
@@ -90,7 +165,7 @@ public class CSVParserServiceImpl extends RemoteServiceServlet implements
 					switch(i)
 					{
 					case 0:
-						
+
 						if(attributes[0] == ""){
 							name = "N/A";
 						}
@@ -131,7 +206,7 @@ public class CSVParserServiceImpl extends RemoteServiceServlet implements
 							String prov = attributes[6];
 							String postalCode = attributes[7];
 							postalCode = postalCode.substring(0, postalCode.length()-1);
-								
+
 							address = street + ", " + city + ", " + prov + ", " + postalCode;
 						}
 						break;
@@ -150,16 +225,16 @@ public class CSVParserServiceImpl extends RemoteServiceServlet implements
 							ownership = attributes[9];
 						break;
 					case 7:
-//							if(attributes[11] == "LATITUDE")
-//								lat = 0.0;
-//							if(attributes[12] == "LONGITUDE")
-//								lon = 0.0;
-							lon = Double.parseDouble(attributes[13]);
-							lat = Double.parseDouble(attributes[14]);
+						//							if(attributes[11] == "LATITUDE")
+						//								lat = 0.0;
+						//							if(attributes[12] == "LONGITUDE")
+						//								lon = 0.0;
+						lon = Double.parseDouble(attributes[13]);
+						lat = Double.parseDouble(attributes[14]);
 						break;
 					}
 				}
-				
+
 				// To be implemented in second sprint.
 				/*
 				 * float lon = Float.parseFloat(attributes[10]); float lat =
@@ -168,25 +243,65 @@ public class CSVParserServiceImpl extends RemoteServiceServlet implements
 				 */
 				//LOG.log(Level.INFO, "name, urlString, type, primaryUse, address, localArea, ownership"
 				//			+ name + urlString + type + primaryUse + address + localArea + ownership);
-				
 				Space space = new Space (name, urlString, type, primaryUse, address, localArea, ownership, lat, lon);
 				spaces.add(space);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (MalformedURLException e) { 
+			e.printStackTrace();
+		}	catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+//			if (br != null) {
+//				try {
+//					br.close();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+
 		}
-//		if(spaces.size() > 0)
-//			spaces.remove(0);
+		//		if(spaces.size() > 0)
+		//			spaces.remove(0);
+		makePersistent(spaces);
+		//return (ArrayList<Space>) spaces;
+	}
+
+	private void makePersistent(ArrayList<Space> spaces) {
+		PersistenceManager pm = getPersistenceManager();
+		try {
+			for(Space space : spaces) {
+				pm.makePersistent(space);
+			}
+		} finally {
+			pm.close();
+		}
+	}
+
+	public ArrayList<Space> getSpaces() {
+		PersistenceManager pm = getPersistenceManager();
+		List<Space> spaces = new ArrayList<Space>();
+		try {
+			Query q = pm.newQuery(Space.class);
+			//q.declareParameters("com.google.appengine.api.users.User u");
+			List<Space> spacesRaw = (List<Space>) q.execute();
+			LOG.log(Level.INFO, "Query results: " + spacesRaw.get(0).getName() + " " + spacesRaw.get(1).getName());
+			for(Space space : spacesRaw) {
+				spaces.add(space);
+			}
+		} finally {
+			pm.close();
+		}
 		return (ArrayList<Space>) spaces;
-	}	
+	}
+
+	private User getUser() {
+		UserService userService = UserServiceFactory.getUserService();
+		return userService.getCurrentUser();
+	}
+
+	private PersistenceManager getPersistenceManager() {
+		return PMF.getPersistenceManager();
+	}
 }
