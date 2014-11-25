@@ -86,7 +86,7 @@ public class Vandelayv2 implements EntryPoint {
 	private HorizontalPanel adminPanel = new HorizontalPanel();
 	private TextBox adminData = new TextBox();
 	private Button adminButton = new Button("Load");
-	
+	private Boolean found = false;
 
 	public void onModuleLoad() {
 
@@ -114,7 +114,7 @@ public class Vandelayv2 implements EntryPoint {
 		});
 
 	}
-	
+
 	private void loadAdminPanel() {
 		adminPanel.add(adminData);
 		adminPanel.add(adminButton);
@@ -132,10 +132,10 @@ public class Vandelayv2 implements EntryPoint {
 					parseAndPersistData(adminData.getText().trim());
 				}
 			}
-			
+
 		});
 	}
-	
+
 	private void parseAndPersistData(String url) {
 		csvParser.parse(url, new AsyncCallback<Void>() {
 			public void onFailure(Throwable error) {}
@@ -168,7 +168,7 @@ public class Vandelayv2 implements EntryPoint {
 	}
 
 	private void displaySpaces() {
-		
+
 		RootPanel.get("spaces").clear();
 
 		signOutLink.setHref(loginInfo.getLogoutUrl());
@@ -176,10 +176,10 @@ public class Vandelayv2 implements EntryPoint {
 		table = makeTable((ArrayList<Space>) spaces);
 		//key = AIzaSyDiDsB0QlBDJzDcE4UybUeEhxM91rM3HDI
 		Maps.loadMapsApi("", "2", false, new Runnable() {
-		      public void run() {
-		        buildMap();
-		      }
-		 });
+			public void run() {
+				buildMap();
+			}
+		});
 
 		table.setPageSize(360);
 
@@ -212,7 +212,7 @@ public class Vandelayv2 implements EntryPoint {
 		filterBox.addItem("Theatre/Performance");
 		filterBox.addItem("Educational");
 		filterBox.addItem("Cafe/Restaurant/Bar");
-		
+
 		areaBox.addItem("Select Local Area");
 		areaBox.addItem(""); 
 		areaBox.addItem("Kitsilano");
@@ -258,19 +258,8 @@ public class Vandelayv2 implements EntryPoint {
 		mainPanel.add(tabPanel);
 
 		RootPanel.get("spaces").add(mainPanel);
-		
-//		Maps.loadMapsApi("AIzaSyDiDsB0QlBDJzDcE4UybUeEhxM91rM3HDI", "2", false, new Runnable() {
-//		      public void run() {
-//		        buildMap();
-//		      }
-//		 });
 
 		searchBox.setFocus(true);
-		
-//		favTable = makeTable(); // change to makeFavTable();
-//		scrollFavPanel.setHeight("400px");
-//		scrollFavPanel.add(favTable);
-//		favouritesPanel.add(scrollFavPanel);
 
 		searchButton.addClickHandler(new ClickHandler() {
 			@Override
@@ -284,7 +273,7 @@ public class Vandelayv2 implements EntryPoint {
 				makeTable2();
 			}
 		});
-		
+
 		resetButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -331,120 +320,120 @@ public class Vandelayv2 implements EntryPoint {
 				}
 			}
 		});
-		
+
 		areaBox.addChangeHandler(new ChangeHandler() {
 			public void onChange(ChangeEvent event) {
 				Integer areaInt = areaBox.getSelectedIndex();
 				switch(areaInt) {
 				case 0:
-				    filteredSpaces = spaces;
-				    makeTable2();
-				    break;
+					filteredSpaces = spaces;
+					makeTable2();
+					break;
 				case 1:
-				    filteredSpaces = areaSearch("", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 2:
-				    filteredSpaces = areaSearch("Kitsilano", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Kitsilano", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 3:
-				    filteredSpaces = areaSearch("Strathcona", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Strathcona", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 4:
-				    filteredSpaces = areaSearch("West Point Grey", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("West Point Grey", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 5:
-				    filteredSpaces = areaSearch("Downtown", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Downtown", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 6:
-				    filteredSpaces = areaSearch("Oakridge", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Oakridge", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 7:
-				    filteredSpaces = areaSearch("Fairview", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Fairview", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 8:
-				    filteredSpaces = areaSearch("Mount Pleasant", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Mount Pleasant", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 9:
-				    filteredSpaces = areaSearch("Grandview-Woodland", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Grandview-Woodland", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 10:
-				    filteredSpaces = areaSearch("Riley Park", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Riley Park", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 11:
-				    filteredSpaces = areaSearch("Hastings-Sunrise", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Hastings-Sunrise", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 12:
-				    filteredSpaces = areaSearch("Killarney", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Killarney", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 13:
-				    filteredSpaces = areaSearch("Marpole", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Marpole", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 14:
-				    filteredSpaces = areaSearch("Renfrew-Collingwood", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Renfrew-Collingwood", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 15:
-				    filteredSpaces = areaSearch("Kensington-Cedar Cottage", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Kensington-Cedar Cottage", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 16:
-				    filteredSpaces = areaSearch("South Cambie", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("South Cambie", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 17:
-				    filteredSpaces = areaSearch("Dunbar-Southlands", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Dunbar-Southlands", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 18:
-				    filteredSpaces = areaSearch("Kerrisdale", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Kerrisdale", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 19:
-				    filteredSpaces = areaSearch("West End", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("West End", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 20:
-				    filteredSpaces = areaSearch("Sunset", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Sunset", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				case 21:
-				    filteredSpaces = areaSearch("Shaughnessy", (ArrayList<Space>) filteredSpaces);
-				    // call function to make map from filteredSpaces
-				    makeTable2();
-				    break;
+					filteredSpaces = areaSearch("Shaughnessy", (ArrayList<Space>) filteredSpaces);
+					// call function to make map from filteredSpaces
+					makeTable2();
+					break;
 				}
 			}
 		});
@@ -467,21 +456,25 @@ public class Vandelayv2 implements EntryPoint {
 					popPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 					popPanel.add(link2);
 					popPanel.add(addFavourite);
-					
+
 					addFavourite.addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
-							csvParser.addFavourite(selected, new AsyncCallback<Void>() {
-								public void onFailure(Throwable error) {
-									//handleError(error);
-								}
-								public void onSuccess(Void ignore) {
-									updateFavourites();
-								}	
-							});
+							if(!checkFavourites(selected)) {
+								csvParser.addFavourite(selected, new AsyncCallback<Void>() {
+									public void onFailure(Throwable error) {
+										//handleError(error);
+									}
+									public void onSuccess(Void ignore) {
+										updateFavourites();
+									}	
+								});
+							} else {
+								Window.alert("This is already a favourite!");
+							}
 						}
 					});
-					
+
 					popup.setAutoHideEnabled(true);
 					popup.setAnimationEnabled(true);
 					popup.setText("Copy this link to get more info or share to social media!");
@@ -494,11 +487,11 @@ public class Vandelayv2 implements EntryPoint {
 			}
 
 		});
-		
+
 		buildFavourites();
-		
+
 	}
-	
+
 	public void buildFavourites() {
 		csvParser.getFavourites(new AsyncCallback<ArrayList<String>>() {
 			public void onFailure(Throwable error) {
@@ -514,7 +507,7 @@ public class Vandelayv2 implements EntryPoint {
 			}
 		});
 	}
-	
+
 	public ArrayList<Space> getFavouritesAsSpaces(ArrayList<String> favourites) {
 		List<Space> favSpaces = new ArrayList<Space>();
 		for(Space space : spaces) {
@@ -525,21 +518,21 @@ public class Vandelayv2 implements EntryPoint {
 		}
 		return (ArrayList<Space>) favSpaces;
 	}
-	
+
 	public void displayFavourites() {
 		favTable = makeTable((ArrayList<Space>) favouriteSpaces);
-		
+
 		favouritesSearchPanel.add(favSearchBox);
 		favouritesSearchPanel.add(favSearchButton);
 		favouritesSearchPanel.add(favResetButton);
-		
+
 		scrollFavPanel.add(favTable);
-		
+
 		favouritesPanel.add(favouritesSearchPanel);
 		favouritesPanel.add(scrollFavPanel);
-		
+
 		tabPanel.add(favouritesPanel, "Favourites");
-		
+
 		favSearchButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -547,12 +540,12 @@ public class Vandelayv2 implements EntryPoint {
 					filteredFavourites = favouriteSpaces;
 					updateFavTableBySearch();
 				} else {
-				filteredFavourites = titleSearch(favSearchBox.getText().trim(), (ArrayList<Space>) favouriteSpaces);
-				updateFavTableBySearch();
+					filteredFavourites = titleSearch(favSearchBox.getText().trim(), (ArrayList<Space>) favouriteSpaces);
+					updateFavTableBySearch();
 				}
 			}
 		});
-		
+
 		favResetButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -561,7 +554,7 @@ public class Vandelayv2 implements EntryPoint {
 				updateFavTableBySearch();
 			}
 		});
-		
+
 		final SingleSelectionModel<Space> selectionModelFav = new SingleSelectionModel<Space>();
 		favTable.setSelectionModel(selectionModelFav);
 		selectionModelFav.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
@@ -580,7 +573,7 @@ public class Vandelayv2 implements EntryPoint {
 					popPanelFav.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 					popPanelFav.add(link2);
 					popPanelFav.add(removeFavourite);
-					
+
 					removeFavourite.addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
@@ -589,12 +582,13 @@ public class Vandelayv2 implements EntryPoint {
 									//handleError(error);
 								}
 								public void onSuccess(Void ignore) {
+									popupFav.hide();
 									updateFavourites();
 								}	
-							});
+							}); 
 						}
 					});
-					
+
 					popupFav.setAutoHideEnabled(true);
 					popupFav.setAnimationEnabled(true);
 					popupFav.setText("Copy this link to get more info or share to social media!");
@@ -608,24 +602,35 @@ public class Vandelayv2 implements EntryPoint {
 
 		});
 	}
-	
+
+	public boolean checkFavourites(Space space) {
+		csvParser.checkFavourite(space, new AsyncCallback<Boolean>() {
+			public void onFailure(Throwable error) {}
+			public void onSuccess(Boolean result) {
+				found = result;
+			}
+		});
+
+		return found;
+	}
+
 	public void updateFavTableBySearch() {
-		
+
 		favTable.setPageSize(filteredFavourites.size()+1);
 		favTable.setRowCount(filteredFavourites.size(), true);
 		favTable.setVisibleRange(0, filteredFavourites.size());
 		favTable.setRowData(0, filteredFavourites);
 	}
-	
-//	public void updateFavouritesTable() {
-//		updateFavourites();
-//		
-//		favTable.setPageSize(favouriteSpaces.size()+1);
-//		favTable.setRowCount(favouriteSpaces.size(), true);
-//		favTable.setVisibleRange(0, favouriteSpaces.size());
-//		favTable.setRowData(0, favouriteSpaces);
-//	};
-	
+
+	//	public void updateFavouritesTable() {
+	//		updateFavourites();
+	//		
+	//		favTable.setPageSize(favouriteSpaces.size()+1);
+	//		favTable.setRowCount(favouriteSpaces.size(), true);
+	//		favTable.setVisibleRange(0, favouriteSpaces.size());
+	//		favTable.setRowData(0, favouriteSpaces);
+	//	};
+
 	public void updateFavourites() {
 		csvParser.getFavourites(new AsyncCallback<ArrayList<String>>() {
 			public void onFailure(Throwable error) {
@@ -643,128 +648,128 @@ public class Vandelayv2 implements EntryPoint {
 	}
 
 	public void buildMap() {
-		
+
 		final LatLng vancouver = LatLng.newInstance(49.261226, -123.1139268);
 		final MapWidget map = new MapWidget(vancouver, 2);
 		map.setCenter(vancouver);
-		
-	    map.setSize("1000px", "400px");
-	    map.addControl(new LargeMapControl());
-	    map.setScrollWheelZoomEnabled(true);
-	    
-	    Icon icon = Icon.newInstance();
-	    MarkerOptions markerOps = MarkerOptions.newInstance();
-	    String iconString = "";
 
-	    for(Space space : spaces) {
-	    	
-	    	String type = space.getType().toLowerCase();
-	    	
-	    	if(type.contains("museum")) {
-	    		iconString = "http://www.google.com/mapfiles/kml/pal4/icon46.png";
-	    	} else if (type.contains("studio")) {
-	    		iconString = "http://www.google.com/mapfiles/kml/pal3/icon21.png";
-	    	} else if (type.contains("community")) {
-	    		iconString = "http://www.google.com/mapfiles/kml/pal3/icon56.png";
-	    	} else if (type.contains("theatre")) {
-	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon22.png";
-	    	} else if (type.contains("education")) {
-	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon10.png";
-	    	} else {
-	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon40.png";
-	    	}
-	    	final String name = space.getName();
-	    	final String address = space.getAddress();
-	    	//InfoWindowContent window = new InfoWindowContent("");
-	    	icon = Icon.newInstance(iconString);
-	    	markerOps = MarkerOptions.newInstance(icon);
-	    	markerOps.setTitle(name + ": located at " + address);
-	    	markerOps.setClickable(true);
+		map.setSize("1000px", "400px");
+		map.addControl(new LargeMapControl());
+		map.setScrollWheelZoomEnabled(true);
+
+		Icon icon = Icon.newInstance();
+		MarkerOptions markerOps = MarkerOptions.newInstance();
+		String iconString = "";
+
+		for(Space space : spaces) {
+
+			String type = space.getType().toLowerCase();
+
+			if(type.contains("museum")) {
+				iconString = "http://www.google.com/mapfiles/kml/pal4/icon46.png";
+			} else if (type.contains("studio")) {
+				iconString = "http://www.google.com/mapfiles/kml/pal3/icon21.png";
+			} else if (type.contains("community")) {
+				iconString = "http://www.google.com/mapfiles/kml/pal3/icon56.png";
+			} else if (type.contains("theatre")) {
+				iconString = "http://www.google.com/mapfiles/kml/pal2/icon22.png";
+			} else if (type.contains("education")) {
+				iconString = "http://www.google.com/mapfiles/kml/pal2/icon10.png";
+			} else {
+				iconString = "http://www.google.com/mapfiles/kml/pal2/icon40.png";
+			}
+			final String name = space.getName();
+			final String address = space.getAddress();
+			//InfoWindowContent window = new InfoWindowContent("");
+			icon = Icon.newInstance(iconString);
+			markerOps = MarkerOptions.newInstance(icon);
+			markerOps.setTitle(name + ": located at " + address);
+			markerOps.setClickable(true);
 			LatLng latlon = LatLng.newInstance(space.getLat(),  space.getLon());
-	    	final Marker spaceMarker = new Marker(latlon, markerOps);
-	    	spaceMarker.addMarkerClickHandler(new MarkerClickHandler() {
-	    		public void onClick(MarkerClickEvent event) {
-	    			spaceMarker.showMapBlowup();
-	    		}
-	    	});
-	    	map.addOverlay(spaceMarker);
-	    	
-	    }
+			final Marker spaceMarker = new Marker(latlon, markerOps);
+			spaceMarker.addMarkerClickHandler(new MarkerClickHandler() {
+				public void onClick(MarkerClickEvent event) {
+					spaceMarker.showMapBlowup();
+				}
+			});
+			map.addOverlay(spaceMarker);
 
-	    map.setCenter(vancouver, 11);
-	    mapPanel.add(map);
-	    
-	    
-//	    // Add a marker
-	    //map.addOverlay(new Marker(cawkerCity));
+		}
 
-	    // Add an info window to highlight a point of interest
-//	    map.getInfoWindow().open(map.getCenter(),
-//	        new InfoWindowContent("World's Largest Ball of Sisal Twine"));
+		map.setCenter(vancouver, 11);
+		mapPanel.add(map);
+
+
+		//	    // Add a marker
+		//map.addOverlay(new Marker(cawkerCity));
+
+		// Add an info window to highlight a point of interest
+		//	    map.getInfoWindow().open(map.getCenter(),
+		//	        new InfoWindowContent("World's Largest Ball of Sisal Twine"));
 	}
-//	
-//	public void updateMapToFiltered() {
-//		
-//		map.clearOverlays();
-//		
-//		Icon icon = Icon.newInstance();
-//	    MarkerOptions markerOps = MarkerOptions.newInstance();
-//	    String iconString = "";
-//
-//	    for(Space space : filteredSpaces) {
-//	    	if(space.getType() == "Museum/Gallery") {
-//	    		iconString = "http://www.google.com/mapfiles/kml/pal4/icon46.png";
-//	    	} else if (space.getType() == "Studio/Rehearsal") {
-//	    		iconString = "http://www.google.com/mapfiles/kml/pal3/icon21.png";
-//	    	} else if (space.getType() == "Community Space") {
-//	    		iconString = "http://www.google.com/mapfiles/kml/pal3/icon56.png";
-//	    	} else if (space.getType() == "Theatre/Performance") {
-//	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon22.png";
-//	    	} else if (space.getType() == "Educational") {
-//	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon10.png";
-//	    	} else {
-//	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon40.png";
-//	    	}
-//	    	
-//	    	icon = Icon.newInstance(iconString);
-//	    	markerOps = MarkerOptions.newInstance(icon);
-//	    	Marker spaceMarker = new Marker(space.getLatLon(), markerOps);
-//	    	map.addOverlay(spaceMarker);
-//	    	
-//	    }
-//	}
-//	
-//	public void resetMapToOriginal() {
-//		
-//		map.clearOverlays();
-//		
-//		Icon icon = Icon.newInstance();
-//	    MarkerOptions markerOps = MarkerOptions.newInstance();
-//	    String iconString = "";
-//
-//	    for(Space space : spaces) {
-//	    	if(space.getType() == "Museum/Gallery") {
-//	    		iconString = "http://www.google.com/mapfiles/kml/pal4/icon46.png";
-//	    	} else if (space.getType() == "Studio/Rehearsal") {
-//	    		iconString = "http://www.google.com/mapfiles/kml/pal3/icon21.png";
-//	    	} else if (space.getType() == "Community Space") {
-//	    		iconString = "http://www.google.com/mapfiles/kml/pal3/icon56.png";
-//	    	} else if (space.getType() == "Theatre/Performance") {
-//	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon22.png";
-//	    	} else if (space.getType() == "Educational") {
-//	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon10.png";
-//	    	} else {
-//	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon40.png";
-//	    	}
-//	    	
-//	    	icon = Icon.newInstance(iconString);
-//	    	markerOps = MarkerOptions.newInstance(icon);
-//	    	Marker spaceMarker = new Marker(space.getLatLon(), markerOps);
-//	    	map.addOverlay(spaceMarker);
-//	    	
-//	    }
-//	}
-	
+	//	
+	//	public void updateMapToFiltered() {
+	//		
+	//		map.clearOverlays();
+	//		
+	//		Icon icon = Icon.newInstance();
+	//	    MarkerOptions markerOps = MarkerOptions.newInstance();
+	//	    String iconString = "";
+	//
+	//	    for(Space space : filteredSpaces) {
+	//	    	if(space.getType() == "Museum/Gallery") {
+	//	    		iconString = "http://www.google.com/mapfiles/kml/pal4/icon46.png";
+	//	    	} else if (space.getType() == "Studio/Rehearsal") {
+	//	    		iconString = "http://www.google.com/mapfiles/kml/pal3/icon21.png";
+	//	    	} else if (space.getType() == "Community Space") {
+	//	    		iconString = "http://www.google.com/mapfiles/kml/pal3/icon56.png";
+	//	    	} else if (space.getType() == "Theatre/Performance") {
+	//	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon22.png";
+	//	    	} else if (space.getType() == "Educational") {
+	//	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon10.png";
+	//	    	} else {
+	//	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon40.png";
+	//	    	}
+	//	    	
+	//	    	icon = Icon.newInstance(iconString);
+	//	    	markerOps = MarkerOptions.newInstance(icon);
+	//	    	Marker spaceMarker = new Marker(space.getLatLon(), markerOps);
+	//	    	map.addOverlay(spaceMarker);
+	//	    	
+	//	    }
+	//	}
+	//	
+	//	public void resetMapToOriginal() {
+	//		
+	//		map.clearOverlays();
+	//		
+	//		Icon icon = Icon.newInstance();
+	//	    MarkerOptions markerOps = MarkerOptions.newInstance();
+	//	    String iconString = "";
+	//
+	//	    for(Space space : spaces) {
+	//	    	if(space.getType() == "Museum/Gallery") {
+	//	    		iconString = "http://www.google.com/mapfiles/kml/pal4/icon46.png";
+	//	    	} else if (space.getType() == "Studio/Rehearsal") {
+	//	    		iconString = "http://www.google.com/mapfiles/kml/pal3/icon21.png";
+	//	    	} else if (space.getType() == "Community Space") {
+	//	    		iconString = "http://www.google.com/mapfiles/kml/pal3/icon56.png";
+	//	    	} else if (space.getType() == "Theatre/Performance") {
+	//	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon22.png";
+	//	    	} else if (space.getType() == "Educational") {
+	//	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon10.png";
+	//	    	} else {
+	//	    		iconString = "http://www.google.com/mapfiles/kml/pal2/icon40.png";
+	//	    	}
+	//	    	
+	//	    	icon = Icon.newInstance(iconString);
+	//	    	markerOps = MarkerOptions.newInstance(icon);
+	//	    	Marker spaceMarker = new Marker(space.getLatLon(), markerOps);
+	//	    	map.addOverlay(spaceMarker);
+	//	    	
+	//	    }
+	//	}
+
 	public static ArrayList<Space> titleSearch(String parameter, ArrayList<Space> originalList) { 
 
 		ArrayList<Space> titleList = new ArrayList<Space>();
@@ -791,7 +796,7 @@ public class Vandelayv2 implements EntryPoint {
 		}
 		return activityList;
 	}
-	
+
 	public static ArrayList<Space> areaSearch(String parameter, ArrayList<Space> originalList) {
 
 		ArrayList<Space> areaList = new ArrayList<Space>();
