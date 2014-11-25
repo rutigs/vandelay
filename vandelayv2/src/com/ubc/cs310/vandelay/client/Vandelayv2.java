@@ -513,7 +513,7 @@ public class Vandelayv2 implements EntryPoint {
 		List<Space> favSpaces = new ArrayList<Space>();
 		for(Space space : spaces) {
 			for(String name: favourites) {
-				if(space.getName() == name)
+				if(space.getAddress() == name)
 					favSpaces.add(space);
 			}
 		}
