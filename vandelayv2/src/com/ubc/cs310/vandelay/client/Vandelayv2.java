@@ -99,7 +99,7 @@ public class Vandelayv2 implements EntryPoint {
 			public void onSuccess(LoginInfo result) {
 				loginInfo = result;
 				//loadAdminPanel();
-				if(loginInfo.getEmailAddress() == "rutigliano.nick@gmail.com") {
+				if(loginInfo.getEmailAddress() == "rutigliano.nicholas@gmail.com") {
 					LOG.log(Level.INFO, "attempting to loadAdminPanel()");
 					loadAdminPanel();
 				} else if(loginInfo.isLoggedIn()) {
@@ -167,7 +167,7 @@ public class Vandelayv2 implements EntryPoint {
 		});
 	}
 
-	private void displaySpaces() {
+	public void displaySpaces() {
 
 		RootPanel.get("spaces").clear();
 
@@ -461,18 +461,18 @@ public class Vandelayv2 implements EntryPoint {
 					addFavourite.addClickHandler(new ClickHandler() {
 						@Override
 						public void onClick(ClickEvent event) {
-							if(!checkFavourites(selected)) {
-								csvParser.addFavourite(selected, new AsyncCallback<Void>() {
-									public void onFailure(Throwable error) {
-										//handleError(error);
-									}
-									public void onSuccess(Void ignore) {
-										updateFavourites();
-									}	
-								});
-							} else {
-								Window.alert("This is already a favourite!");
-							}
+							csvParser.checkFavourite(selected, new AsyncCallback<Boolean>() {
+								public void onFailure(Throwable error) {}
+								public void onSuccess(Boolean result) {
+									found = result;
+									csvParser.addFavourite(selected, new AsyncCallback<Void>() {
+										public void onFailure(Throwable error) {}
+										public void onSuccess(Void ignore) {
+											updateFavourites();
+										}	
+									});
+								}
+							});
 						}
 					});
 
@@ -488,7 +488,7 @@ public class Vandelayv2 implements EntryPoint {
 			}
 
 		});
-
+		
 		buildFavourites();
 
 	}
@@ -604,17 +604,6 @@ public class Vandelayv2 implements EntryPoint {
 		});
 	}
 
-	public boolean checkFavourites(Space space) {
-		csvParser.checkFavourite(space, new AsyncCallback<Boolean>() {
-			public void onFailure(Throwable error) {}
-			public void onSuccess(Boolean result) {
-				found = result;
-			}
-		});
-
-		return found;
-	}
-
 	public void updateFavTableBySearch() {
 
 		favTable.setPageSize(filteredFavourites.size()+1);
@@ -638,6 +627,7 @@ public class Vandelayv2 implements EntryPoint {
 			}
 
 			public void onSuccess(ArrayList<String> result) {
+				LOG.log(Level.INFO, "" + result.toString());				
 				favouriteSpaces = getFavouritesAsSpaces(result);
 				filteredFavourites = favouriteSpaces;
 				LOG.log(Level.INFO, "Number of filteredFavourites before filtering: " + filteredSpaces.size());

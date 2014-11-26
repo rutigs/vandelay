@@ -44,13 +44,14 @@ CSVParserService {
 	public void addFavourite(Space space) {
 		PersistenceManager pm = getPersistenceManager();
 		try {
-			String spaceStr = space.getName();
+			String spaceStr = space.getAddress();
 			pm.makePersistent(new FavouriteSpace(getUser(), spaceStr));
 		} finally {
 			pm.close();
 		}
 	}
 
+	
 	public ArrayList<String> getFavourites() {
 		PersistenceManager pm = getPersistenceManager();
 		List<String> favourites = new ArrayList<String>();
@@ -75,7 +76,7 @@ CSVParserService {
 			q.declareParameters("com.google.appengine.api.users.User u");
 			List<FavouriteSpace> favs = (List<FavouriteSpace>) q.execute(getUser());
 			for(FavouriteSpace favourite : favs) {
-				if(space.equals(favourite.getSpace())) {
+				if(space.getAddress().equals(favourite.getSpace())) {
 					found = true;
 				}
 			}
