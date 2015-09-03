@@ -174,7 +174,6 @@ public class Vandelayv2 implements EntryPoint {
 		signOutLink.setHref(loginInfo.getLogoutUrl());
 
 		table = makeTable((ArrayList<Space>) spaces);
-		//key = AIzaSyDiDsB0QlBDJzDcE4UybUeEhxM91rM3HDI
 		Maps.loadMapsApi("", "2", false, new Runnable() {
 			public void run() {
 				buildMap();
